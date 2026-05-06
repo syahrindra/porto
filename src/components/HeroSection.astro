@@ -1,0 +1,261 @@
+---
+import { personalInfo } from "../data/resume";
+---
+
+<section class="hero" id="hero">
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <div class="hero-greeting reveal">
+        <span class="greeting-line"></span>
+        <span class="greeting-text">Hello, I'm</span>
+      </div>
+      <h1 class="hero-name reveal reveal-delay-1">
+        {personalInfo.name}<span class="name-dot">.</span>
+      </h1>
+      <p class="hero-role reveal reveal-delay-2">
+        <span class="gradient-text">{personalInfo.role}</span>
+      </p>
+      <p class="hero-bio reveal reveal-delay-3">
+        Passionate about turning complex data into actionable insights,
+        Certified Azure AI Fundamental and Microsoft Excel Associate. Proven
+        track record in data operations at Bank Muamalat, where I built KPI
+        dashboards that improved reporting efficiency. Experienced GDSC
+        Co-Leader with a focus on technical community growth and event
+        management.
+      </p>
+    </div>
+    <div class="hero-visual reveal reveal-delay-2">
+      <div class="profile-ring">
+        <img
+          src="/profile.jpg"
+          alt="Profile photo of M. syahrindra"
+          class="profile-img"
+          width="320"
+          height="320"
+        />
+      </div>
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: calc(100vh - var(--nav-height));
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-4xl) 0;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  .hero-greeting {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .greeting-line {
+    width: 40px;
+    height: 2px;
+    background: var(--c-gradient);
+    border-radius: 1px;
+  }
+
+  .greeting-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: var(--space-md);
+    color: var(--c-text);
+  }
+
+  .name-dot {
+    color: var(--c-accent);
+  }
+
+  .hero-role {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 600;
+    font-family: var(--font-heading);
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-bio {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-2xl);
+    max-width: 52ch;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 28px;
+    background: var(--c-gradient);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+    transition:
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(217, 119, 87, 0.25);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 28px;
+    border: 1px solid var(--c-border);
+    color: var(--c-text-muted);
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    background: var(--c-bg-card);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--c-border-hover);
+    color: var(--c-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Profile visual */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile-ring {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    padding: 4px;
+    background: var(--c-gradient);
+    position: relative;
+    z-index: 2;
+  }
+
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--c-bg);
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.12;
+    z-index: 1;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .hero-orb-1 {
+    width: 300px;
+    height: 300px;
+    background: var(--c-accent);
+    top: -40px;
+    right: -60px;
+  }
+
+  .hero-orb-2 {
+    width: 200px;
+    height: 200px;
+    background: var(--c-accent-2);
+    bottom: -30px;
+    left: -40px;
+    animation-delay: 4s;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(15px, -15px);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-greeting {
+      justify-content: center;
+    }
+
+    .hero-bio {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta {
+      justify-content: center;
+    }
+
+    .hero-visual {
+      order: -1;
+    }
+
+    .profile-ring {
+      width: 220px;
+      height: 220px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      justify-content: center;
+    }
+
+    .profile-ring {
+      width: 180px;
+      height: 180px;
+    }
+  }
+</style>

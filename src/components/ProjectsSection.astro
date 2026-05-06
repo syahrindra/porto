@@ -1,0 +1,319 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projectsEntries = await getCollection('projects');
+const projects = projectsEntries.map(entry => ({
+  slug: entry.slug,
+  ...entry.data
+}));
+
+// Extract all unique tag items across all projects
+const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
+---
+
+<section class="projects-section section" id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">
+        <span class="label-line"></span>
+        <span>Selected Work</span>
+      </div>
+      <h2>Projects</h2>
+      <p class="section-desc">Things I've built — from ML pipelines to full-stack platforms.</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar reveal reveal-delay-1" id="filter-bar">
+      <button class="filter-tag active" data-filter="all" id="filter-all">All</button>
+      {allTag.map((tag) => (
+        <button class="filter-tag" data-filter={tag} id={`filter-${tag.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{tag}</button>
+      ))}
+    </div>
+  </div>
+
+  <div class="scroll-container reveal reveal-delay-2" id="scroll-container">
+    <div class="scroll-track" id="scroll-track">
+      {projects.map((project) => (
+        <ProjectCard
+          slug={project.slug}
+          title={project.title}
+          tagline={project.tagline}
+          tag={project.tag}
+          year={project.year}
+          coverImage={project.coverImage}
+        />
+      ))}
+      <div class="scroll-end-spacer"></div>
+    </div>
+  </div>
+
+  <!-- Empty state -->
+  <div class="container">
+    <div class="no-results" id="no-results">
+      <p>No projects match this filter.</p>
+    </div>
+    <div class="scroll-hint reveal reveal-delay-3" id="scroll-hint">
+      <span>Scroll to explore</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--c-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-md);
+  }
+
+  .label-line {
+    width: 24px;
+    height: 2px;
+    background: var(--c-gradient);
+    border-radius: 1px;
+  }
+
+  .section-desc {
+    margin-top: var(--space-sm);
+    font-size: 1rem;
+  }
+
+  /* ---- Filter Bar ---- */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .filter-tag {
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--c-text-dim);
+    border: 1px solid var(--c-border);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+
+  .filter-tag:hover {
+    color: var(--c-text-muted);
+    border-color: var(--c-border-hover);
+    background: var(--c-bg-card);
+  }
+
+  .filter-tag.active {
+    background: var(--c-accent-soft);
+    color: var(--c-accent);
+    border-color: rgba(217, 119, 87, 0.25);
+  }
+
+  /* ---- Scroll Row ---- */
+  .scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: var(--space-md) 0 var(--space-xl) 0;
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-track {
+    display: flex;
+    gap: var(--space-lg);
+    padding: 0 max(var(--space-xl), calc((100vw - var(--max-width)) / 2 + var(--space-xl)));
+    width: max-content;
+    transition: opacity 0.3s ease;
+  }
+
+  .scroll-end-spacer {
+    flex: 0 0 1px;
+  }
+
+  /* ---- Card filter states ---- */
+  :global(.project-card.filtered-out) {
+    display: none !important;
+  }
+
+  :global(.project-card.filter-enter) {
+    animation: cardFadeIn 0.35s ease forwards;
+  }
+
+  @keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ---- Empty state ---- */
+  .no-results {
+    display: none;
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    color: var(--c-text-dim);
+    font-size: 0.9rem;
+  }
+
+  .no-results.visible {
+    display: block;
+  }
+
+  /* ---- Scroll hint ---- */
+  .scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    color: var(--c-text-dim);
+    font-size: 0.8rem;
+    margin-top: var(--space-md);
+    animation: nudge 2s ease-in-out infinite;
+  }
+
+  .scroll-hint.hidden {
+    display: none;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+</style>
+
+<script>
+  // ---- Filter logic ----
+  const filterBar = document.getElementById('filter-bar');
+  const scrollContainer = document.getElementById('scroll-container');
+  const scrollHint = document.getElementById('scroll-hint');
+  const noResults = document.getElementById('no-results');
+  const cards = document.querySelectorAll('.project-card') as NodeListOf<HTMLElement>;
+
+  if (filterBar) {
+    const filterButtons = filterBar.querySelectorAll('.filter-tag') as NodeListOf<HTMLButtonElement>;
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter || 'all';
+
+        // Update active state
+        filterButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter cards
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const tags = (card.dataset.tag || '').split(',');
+          const matches = filter === 'all' || tags.includes(filter);
+
+          card.classList.remove('filter-enter');
+
+          if (matches) {
+            card.classList.remove('filtered-out');
+            // Trigger re-animation
+            requestAnimationFrame(() => {
+              card.classList.add('filter-enter');
+            });
+            visibleCount++;
+          } else {
+            card.classList.add('filtered-out');
+          }
+        });
+
+        // Show/hide empty state
+        if (noResults) {
+          noResults.classList.toggle('visible', visibleCount === 0);
+        }
+        if (scrollHint) {
+          scrollHint.classList.toggle('hidden', visibleCount === 0);
+        }
+
+        // Reset scroll position
+        if (scrollContainer) {
+          scrollContainer.scrollLeft = 0;
+        }
+      });
+    });
+
+    // Also allow clicking tags inside project cards to trigger filter
+    document.querySelectorAll('[data-filter-tech]').forEach((tagEl) => {
+      tagEl.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const tech = (tagEl as HTMLElement).dataset.filterTech || '';
+        const matchingBtn = filterBar.querySelector(`[data-filter="${tech}"]`) as HTMLButtonElement;
+        if (matchingBtn) {
+          matchingBtn.click();
+          // Scroll filter bar to show the active button
+          matchingBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+    });
+  }
+
+  // ---- Drag-to-scroll ----
+  if (scrollContainer) {
+    let isDown = false;
+    let startX: number;
+    let scrollLeft: number;
+    let hasDragged = false;
+
+    scrollContainer.addEventListener('mousedown', (e) => {
+      isDown = true;
+      hasDragged = false;
+      scrollContainer.style.cursor = 'grabbing';
+      startX = e.pageX - scrollContainer.offsetLeft;
+      scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener('mouseleave', () => {
+      isDown = false;
+      scrollContainer.style.cursor = 'grab';
+    });
+
+    scrollContainer.addEventListener('mouseup', () => {
+      isDown = false;
+      scrollContainer.style.cursor = 'grab';
+    });
+
+    scrollContainer.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      hasDragged = true;
+      const x = e.pageX - scrollContainer.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    // Prevent card navigation when dragging
+    scrollContainer.addEventListener('click', (e) => {
+      if (hasDragged) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    scrollContainer.style.cursor = 'grab';
+  }
+</script>

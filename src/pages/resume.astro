@@ -1,0 +1,342 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/global.css";
+import {
+  personalInfo,
+  education,
+  professionalExperience,
+  leadershipExperience,
+  skills,
+  certification,
+} from "../data/resume";
+---
+
+<BaseLayout
+  title="Resume — M. Syahrindra"
+  description="Resume of Mochammad Syahrindra Akbar Suharno"
+>
+  <div class="resume-container">
+    <div class="container">
+      <!-- Education -->
+      <div class="resume-label">
+        <h2>Education</h2>
+      </div>
+      {
+        education.map((edu) => (
+          <div class="resume-row">
+            <div class="resume-logo-col">
+              <div class="resume-logo">
+                {edu.logoUrl ? (
+                  <img
+                    src={edu.logoUrl}
+                    alt={`${edu.institution} logo`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="logo-placeholder">
+                    {edu.institution.charAt(0)}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div class="resume-content-col">
+              <h3>{edu.institution}</h3>
+              <p>{edu.degree}</p>
+              <p class="meta">{edu.period}</p>
+              {edu.details.length > 0 && (
+                <ul>
+                  {edu.details.map((d) => (
+                    <li>{d}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))
+      }
+
+      <!-- Experience -->
+      <div class="resume-label">
+        <h2>Experience</h2>
+      </div>
+      {
+        professionalExperience.map((exp) => (
+          <div class="resume-row">
+            <div class="resume-logo-col">
+              <div class="resume-logo">
+                {exp.logoUrl ? (
+                  <img
+                    src={exp.logoUrl}
+                    alt={`${exp.organization} logo`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="logo-placeholder">
+                    {exp.organization.charAt(0)}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div class="resume-content-col">
+              <h3>{exp.organization}</h3>
+              <p>{exp.role}</p>
+              <p class="meta">{exp.period}</p>
+              {exp.bullets.length > 0 && (
+                <ul>
+                  {exp.bullets.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))
+      }
+
+      <!-- Leadership & Community -->
+      <div class="resume-label">
+        <h2>Leadership & Community</h2>
+      </div>
+      {
+        leadershipExperience.map((exp) => (
+          <div class="resume-row">
+            <div class="resume-logo-col">
+              <div class="resume-logo">
+                {exp.logoUrl ? (
+                  <img
+                    src={exp.logoUrl}
+                    alt={`${exp.organization} logo`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="logo-placeholder">
+                    {exp.organization.charAt(0)}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div class="resume-content-col">
+              <h3>{exp.organization}</h3>
+              <p>{exp.role}</p>
+              <p class="meta">{exp.period}</p>
+              {exp.bullets.length > 0 && (
+                <ul>
+                  {exp.bullets.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        ))
+      }
+
+      <!-- Skills -->
+      <div class="resume-label">
+        <h2>Skills</h2>
+      </div>
+      <div class="resume-row">
+        <div class="resume-logo-col"></div>
+        <div class="resume-content-col">
+          {
+            skills.map((cat) => (
+              <div class="skill-group">
+                <h4>{cat.category}</h4>
+                <p>{cat.items.join(", ")}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="resume-label">
+        <h2>Certifications</h2>
+      </div>
+      {
+        certification.map((cert) => (
+          <div class="resume-row">
+            <div class="resume-logo-col">
+              <div class="resume-logo">
+                {cert.logoUrl ? (
+                  <img
+                    src={cert.logoUrl}
+                    alt={`${cert.name} logo`}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div class="logo-placeholder">{cert.name.charAt(0)}</div>
+                )}
+              </div>
+            </div>
+            <div class="resume-content-col">
+              <h3>{cert.name}</h3>
+              <p>
+                <a
+                  href={cert.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cert-link"
+                >
+                  View Credential ↗
+                </a>
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .resume-container {
+    padding: var(--space-4xl) 0 var(--space-5xl);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Section label */
+  .resume-label {
+    padding: var(--space-2xl) 0 var(--space-lg);
+    border-bottom: 2px solid var(--c-border);
+    margin-bottom: var(--space-xl);
+  }
+
+  .resume-label h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--c-text);
+  }
+
+  /* Row: image left, content right */
+  .resume-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--space-xl);
+    padding: var(--space-lg) 0;
+    align-items: start;
+  }
+
+  /* Logo column */
+  .resume-logo-col {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .resume-logo {
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .resume-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .logo-placeholder {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--c-accent);
+    background: var(--c-accent-soft);
+    border-radius: var(--radius-sm);
+  }
+
+  /* Content column */
+  .resume-content-col h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--c-text);
+    line-height: 1.3;
+    margin-bottom: 2px;
+  }
+
+  .resume-content-col p {
+    font-size: 0.95rem;
+    color: var(--c-text-muted);
+    line-height: 1.5;
+    max-width: none;
+  }
+
+  .resume-content-col .meta {
+    font-size: 0.85rem;
+    color: var(--c-text-dim);
+    margin-top: 2px;
+  }
+
+  .resume-content-col ul {
+    margin-top: var(--space-sm);
+    padding-left: var(--space-lg);
+  }
+
+  .resume-content-col ul li {
+    font-size: 0.9rem;
+    color: var(--c-text-muted);
+    line-height: 1.6;
+    list-style: disc;
+    margin-bottom: 2px;
+  }
+
+  .resume-content-col ul li::marker {
+    color: var(--c-text-dim);
+  }
+
+  /* Skills */
+  .skill-group {
+    margin-bottom: var(--space-md);
+  }
+
+  .skill-group h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--c-text);
+    margin-bottom: 2px;
+  }
+
+  .skill-group p {
+    font-size: 0.9rem;
+  }
+
+  /* Certifications */
+  .cert-link {
+    color: var(--c-accent);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    font-size: 0.95rem;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  .cert-link:hover {
+    color: var(--c-text);
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .resume-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .resume-logo-col {
+      justify-content: flex-start;
+    }
+
+    .resume-logo {
+      width: 100px;
+      height: 100px;
+    }
+  }
+</style>

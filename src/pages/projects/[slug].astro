@@ -1,0 +1,342 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/global.css";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projectsEntries = await getCollection("projects");
+  return projectsEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const project = entry.data;
+const { Content } = await entry.render();
+
+const allProjects = await getCollection("projects");
+const projects = allProjects.map((e) => ({ slug: e.slug, ...e.data }));
+---
+
+<BaseLayout
+  title={`${project.title} — Mochammad Syahrindra Akbar Suharno`}
+  description={project.tagline}
+>
+  <article class="project-detail">
+    <!-- Back link -->
+    <div class="container">
+      <a href="/#projects" class="back-link reveal" id="back-to-projects">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg
+        >
+        Back to projects
+      </a>
+    </div>
+
+    <!-- Header -->
+    <header class="project-header section">
+      <div class="container">
+        <h1 class="reveal reveal-delay-1">{project.title}</h1>
+        <div class="project-meta reveal">
+          <span class="tag">{project.year}</span>
+          <!-- {project.tag.map((tag: string) => <span class="tag">{tag}</span>)} -->
+        </div>
+        <p class="project-tagline reveal reveal-delay-2">{project.tagline}</p>
+        <div class="project-links reveal reveal-delay-3">
+          {
+            project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener"
+                class="proj-link"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                Source Code
+              </a>
+            )
+          }
+          {
+            project.link && (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener"
+                class="proj-link"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+                </svg>
+                Live Demo
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- Cover Image -->
+    {
+      project.coverImage && (
+        <div class="container">
+          <div class="project-cover reveal">
+            <img
+              src={project.coverImage}
+              alt={`${project.title} showcase`}
+              width="1200"
+              height="675"
+            />
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Overview -->
+    <section class="project-body section">
+      <div class="container content-container">
+        <div class="markdown-body">
+          <Content />
+        </div>
+
+        <div class="content-block reveal">
+          <h2>Tags</h2>
+          <div class="tech-tags">
+            {
+              project.tag.map((tag: string) => (
+                <span class="tag tag-lg">{tag}</span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nav to other projects -->
+    <section class="project-nav section">
+      <div class="container">
+        <h3 class="reveal">Other Projects</h3>
+        <div class="other-projects reveal reveal-delay-1">
+          {
+            projects
+              .filter((p) => p.slug !== entry.slug)
+              .slice(0, 3)
+              .map((p) => (
+                <a href={`/projects/${p.slug}`} class="other-card">
+                  <span class="other-title">{p.title}</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              ))
+          }
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 0.875rem;
+    color: var(--c-text-muted);
+    padding-top: var(--space-xl);
+    transition: color var(--transition-fast);
+  }
+  .back-link:hover {
+    color: var(--c-accent);
+  }
+
+  .project-header {
+    padding-bottom: var(--space-2xl);
+  }
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--space-lg);
+  }
+
+  .project-header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: var(--space-md);
+    color: var(--c-text);
+  }
+
+  .project-tagline {
+    font-size: 1.15rem;
+    max-width: 60ch;
+    line-height: 1.7;
+  }
+
+  .project-links {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .proj-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--c-text-muted);
+    transition: all var(--transition-fast);
+    background: var(--c-bg-card);
+  }
+  .proj-link:hover {
+    border-color: var(--c-accent);
+    color: var(--c-accent);
+    background: var(--c-accent-soft);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Cover Image */
+  .project-cover {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .project-cover img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .content-container {
+    max-width: 800px;
+  }
+
+  .content-block {
+    margin-bottom: var(--space-3xl);
+  }
+  .content-block h2 {
+    margin-bottom: var(--space-lg);
+    font-size: 1.5rem;
+    color: var(--c-text);
+  }
+
+  .body-text {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--c-text-muted);
+  }
+
+  :global(.markdown-body h2) {
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-lg);
+    font-size: 1.5rem;
+    color: var(--c-text);
+  }
+  :global(.markdown-body p) {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-md);
+  }
+  :global(.markdown-body ul) {
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    list-style: disc;
+  }
+  :global(.markdown-body ol) {
+    padding-left: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    list-style: decimal;
+  }
+  :global(.markdown-body li) {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-sm);
+  }
+  :global(.markdown-body img) {
+    max-width: 100%;
+    border-radius: var(--radius-md);
+    margin: var(--space-lg) 0;
+    border: 1px solid var(--c-border);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag-lg {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+  }
+
+  /* Other projects nav */
+  .project-nav {
+    border-top: 1px solid var(--c-border);
+  }
+  .project-nav h3 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .other-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .other-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg);
+    background: var(--c-bg-card);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+  .other-card:hover {
+    border-color: var(--c-border-hover);
+    background: var(--c-bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+  .other-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--c-text);
+  }
+</style>
