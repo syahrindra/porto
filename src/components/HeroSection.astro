@@ -26,13 +26,30 @@ import { personalInfo } from "../data/resume";
     </div>
     <div class="hero-visual reveal reveal-delay-2">
       <div class="profile-ring">
-        <img
-          src="/profile.jpg"
-          alt="Profile photo of M. syahrindra"
-          class="profile-img"
-          width="320"
-          height="320"
-        />
+        <picture>
+          <source
+            type="image/avif"
+            srcset="/profile-180w.avif 180w, /profile-220w.avif 220w, /profile-320w.avif 320w, /profile-480w.avif 480w, /profile-640w.avif 640w"
+            sizes="(max-width: 480px) 180px, (max-width: 900px) 220px, 320px"
+          />
+          <source
+            type="image/webp"
+            srcset="/profile-180w.webp 180w, /profile-220w.webp 220w, /profile-320w.webp 320w, /profile-480w.webp 480w, /profile-640w.webp 640w"
+            sizes="(max-width: 480px) 180px, (max-width: 900px) 220px, 320px"
+          />
+          <img
+            src="/profile-320w.jpg"
+            srcset="/profile-320w.jpg 320w, /profile-480w.webp 480w, /profile-640w.webp 640w"
+            sizes="(max-width: 480px) 180px, (max-width: 900px) 220px, 320px"
+            alt="Profile photo of M. Syahrindra"
+            class="profile-img"
+            width="320"
+            height="320"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </picture>
       </div>
       <div class="hero-orb hero-orb-1"></div>
       <div class="hero-orb hero-orb-2"></div>

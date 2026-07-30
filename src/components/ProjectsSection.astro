@@ -24,11 +24,14 @@ const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
     </div>
 
     <!-- Filter Bar -->
-    <div class="filter-bar reveal reveal-delay-1" id="filter-bar">
-      <button class="filter-tag active" data-filter="all" id="filter-all">All</button>
-      {allTag.map((tag) => (
-        <button class="filter-tag" data-filter={tag} id={`filter-${tag.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{tag}</button>
-      ))}
+    <div class="filter-bar-wrapper reveal reveal-delay-1">
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-tag active" data-filter="all" id="filter-all">All</button>
+        {allTag.map((tag) => (
+          <button class="filter-tag" data-filter={tag} id={`filter-${tag.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>{tag}</button>
+        ))}
+      </div>
+      <div class="filter-bar-fade" id="filter-bar-fade"></div>
     </div>
   </div>
 
@@ -53,9 +56,29 @@ const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
     <div class="no-results" id="no-results">
       <p>No projects match this filter.</p>
     </div>
-    <div class="scroll-hint reveal reveal-delay-3" id="scroll-hint">
-      <span>Scroll to explore</span>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    <div class="scroll-nav reveal reveal-delay-3" id="scroll-nav">
+      <div class="carousel-pagination">
+        <div class="combo-button-group">
+          <button class="carousel-btn carousel-btn--prev" id="carousel-prev" aria-label="Previous" disabled>
+            <span aria-hidden="true" class="icon-md-fill">
+              <svg viewBox="0 -960 960 960" aria-hidden="true" fill="currentColor" height="24px" width="24px" xmlns="http://www.w3.org/2000/svg">
+                <path d="M560.62-253.85 333.85-480.62l226.77-227.15 32.61 32.62-194.15 194.53 194.15 194.16-32.61 32.61Z"></path>
+              </svg>
+            </span>
+          </button>
+          <button class="carousel-btn carousel-btn--next" id="carousel-next" aria-label="Next">
+            <span aria-hidden="true" class="icon-md-fill">
+              <svg viewBox="0 -960 960 960" aria-hidden="true" fill="currentColor" height="24px" width="24px" xmlns="http://www.w3.org/2000/svg">
+                <path d="M536.92-480.62 342.77-675.15l32.61-32.62 226.77 227.15-226.77 226.77-32.61-32.61 194.15-194.16Z"></path>
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div class="scroll-hint" id="scroll-hint">
+        <span>Scroll to explore</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </div>
     </div>
   </div>
 </section>
@@ -95,11 +118,19 @@ const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
   }
 
   /* ---- Filter Bar ---- */
+  .filter-bar-wrapper {
+    position: relative;
+    margin-bottom: var(--space-lg);
+  }
+
   .filter-bar {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: var(--space-lg);
+  }
+
+  .filter-bar-fade {
+    display: none;
   }
 
   .filter-tag {
@@ -136,6 +167,7 @@ const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding: var(--space-md) 0 var(--space-xl) 0;
+    
   }
 
   .scroll-container::-webkit-scrollbar {
@@ -181,14 +213,24 @@ const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
     display: block;
   }
 
-  /* ---- Scroll hint ---- */
+  /* ---- Scroll nav (hint + buttons) ---- */
+  .scroll-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-md);
+  }
+
+  .scroll-nav.hidden {
+    display: none;
+  }
+
   .scroll-hint {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
     color: var(--c-text-dim);
     font-size: 0.8rem;
-    margin-top: var(--space-md);
     animation: nudge 2s ease-in-out infinite;
   }
 
@@ -200,13 +242,123 @@ const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
     0%, 100% { transform: translateX(0); }
     50% { transform: translateX(8px); }
   }
+
+  /* ---- Carousel Pagination Buttons ---- */
+  .carousel-pagination {
+    display: flex;
+    align-items: center;
+  }
+
+  .combo-button-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--c-bg-card);
+    border: 1px solid var(--c-border);
+    border-radius: 999px;
+    padding: 4px;
+  }
+
+  .carousel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--c-text);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .carousel-btn:hover:not(:disabled) {
+    background: var(--c-accent-soft);
+    color: var(--c-accent);
+  }
+
+  .carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .icon-md-fill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---- Responsive Filter Bar ---- */
+  @media (max-width: 900px) {
+    .filter-bar-wrapper {
+      position: relative;
+    }
+
+    .filter-bar {
+      max-height: 120px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--c-border) transparent;
+    }
+
+    .filter-bar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .filter-bar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .filter-bar::-webkit-scrollbar-thumb {
+      background: var(--c-border);
+      border-radius: 2px;
+    }
+
+    .filter-bar-fade {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background: linear-gradient(to bottom, transparent, var(--c-bg));
+      pointer-events: none;
+      border-radius: 0 0 8px 8px;
+      transition: opacity 0.2s ease;
+    }
+
+    .filter-bar-fade.hidden {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .filter-bar {
+      max-height: 105px;
+    }
+
+    .scroll-track {
+      padding: 0 var(--space-md);
+    }
+
+    .carousel-btn {
+      width: 32px;
+      height: 32px;
+    }
+
+    .icon-md-fill svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 </style>
 
 <script>
   // ---- Filter logic ----
   const filterBar = document.getElementById('filter-bar');
   const scrollContainer = document.getElementById('scroll-container');
-  const scrollHint = document.getElementById('scroll-hint');
+  const scrollHint = document.getElementById('scroll-nav');
   const noResults = document.getElementById('no-results');
   const cards = document.querySelectorAll('.project-card') as NodeListOf<HTMLElement>;
 
@@ -315,5 +467,62 @@ const allTag = [...new Set(projects.flatMap((p) => p.tag))].sort();
     }, true);
 
     scrollContainer.style.cursor = 'grab';
+  }
+
+  // ---- Carousel Prev/Next Buttons ----
+  const prevBtn = document.getElementById('carousel-prev') as HTMLButtonElement;
+  const nextBtn = document.getElementById('carousel-next') as HTMLButtonElement;
+
+  if (scrollContainer && prevBtn && nextBtn) {
+    // Scroll amount per click — roughly one card width + gap
+    const getScrollStep = () => {
+      const card = scrollContainer.querySelector('.project-card') as HTMLElement;
+      if (card) return card.offsetWidth + 24; // card width + gap
+      return 400;
+    };
+
+    const updateButtonStates = () => {
+      const sl = scrollContainer.scrollLeft;
+      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      prevBtn.disabled = sl <= 2;
+      nextBtn.disabled = sl >= maxScroll - 2;
+    };
+
+    prevBtn.addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+    });
+
+    scrollContainer.addEventListener('scroll', updateButtonStates, { passive: true });
+    // Initial state
+    updateButtonStates();
+
+    // Also update after filter changes (DOM might change)
+    const observer = new MutationObserver(() => {
+      requestAnimationFrame(updateButtonStates);
+    });
+    const scrollTrack = document.getElementById('scroll-track');
+    if (scrollTrack) {
+      observer.observe(scrollTrack, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+    }
+  }
+
+  // ---- Filter Bar Fade Indicator ----
+  const filterBarEl = document.getElementById('filter-bar');
+  const filterBarFade = document.getElementById('filter-bar-fade');
+
+  if (filterBarEl && filterBarFade) {
+    const updateFade = () => {
+      const isScrolledToBottom = filterBarEl.scrollHeight - filterBarEl.scrollTop - filterBarEl.clientHeight < 4;
+      const hasOverflow = filterBarEl.scrollHeight > filterBarEl.clientHeight;
+      filterBarFade.classList.toggle('hidden', !hasOverflow || isScrolledToBottom);
+    };
+
+    filterBarEl.addEventListener('scroll', updateFade, { passive: true });
+    window.addEventListener('resize', updateFade);
+    updateFade();
   }
 </script>
