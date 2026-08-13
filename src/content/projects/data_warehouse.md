@@ -2,7 +2,7 @@
 title: "Enterprise Sales Data Warehouse with SQL Server & Medallion Architecture"
 tagline: "End-to-end SQL Data Warehouse consolidating ERP & CRM data streams using Bronze, Silver, and Gold Medallion layers."
 description: "An enterprise-grade SQL Data Warehouse designed and built using T-SQL, SQL Server, Medallion Architecture, and Dimensional Modeling (Star Schema) to unify siloed sales operations."
-tag: ["Data Warehousing", "SQL Server", "T-SQL", "ETL / ELT", "Medallion Architecture", "Data Modeling", "Star Schema", "Data Quality"]
+tag: ["Data Warehousing", "SQL Server", "T-SQL", "ETL / ELT", "Medallion Architecture", "Data Modeling", "Star Schema", "Data Quality", "Data Engineering"]
 github: "https://github.com/syahrindra/sql-data-warehouse-project"
 featured: true
 year: "2026"

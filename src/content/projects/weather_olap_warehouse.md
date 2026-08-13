@@ -2,7 +2,7 @@
 title: "Jabodetabek Weather OLAP Data Warehouse with DuckDB & dbt"
 tagline: "End-to-end local ELT pipeline transforming Open-Meteo REST API streams into analytical dimensional models for urban logistics."
 description: "An automated, local ELT Data Warehouse built using Python, DuckDB, dbt (data build tool), and SQL Dimensional Modeling to analyze weather metrics across JABODETABEK cities for delivery delay prediction."
-tag: ["Data Warehousing", "DuckDB", "dbt", "ELT Pipeline", "Python", "SQL", "Dimensional Modeling", "Data Quality"]
+tag: ["Data Warehousing", "DuckDB", "dbt", "ELT Pipeline", "Python", "SQL", "Dimensional Modeling", "Data Quality", "Data Engineering"]
 github: "https://github.com/syahrindra/weather-olap-warehouse"
 featured: true
 year: "2026"

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="100%" height="100%" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#0f172a">Fintech Pipeline Architecture (DuckDB + dbt + Docker)</text>
+  <text x="500" y="55" text-anchor="middle" font-size="13" fill="#64748b">Simple end-to-end flow: Ingestion ➔ Parquet ➔ dbt Models ➔ Log Monitoring</text>
+
+  <!-- Stage 1: Ingestion -->
+  <g transform="translate(40, 90)">
+    <rect width="190" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="190" height="36" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" />
+    <text x="95" y="23" text-anchor="middle" font-size="13" font-weight="700" fill="#0369a1">1. Ingestion</text>
+    
+    <rect x="15" y="55" width="160" height="65" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="95" y="78" text-anchor="middle" font-size="12" font-weight="600" fill="#1e293b">ingest_transactions.py</text>
+    <text x="95" y="98" text-anchor="middle" font-size="11" fill="#64748b">Generates 500k records</text>
+
+    <rect x="15" y="135" width="160" height="100" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="95" y="158" text-anchor="middle" font-size="11" font-weight="600" fill="#475569">Schema Fields:</text>
+    <text x="95" y="178" text-anchor="middle" font-size="11" fill="#64748b">transaction_id, status</text>
+    <text x="95" y="196" text-anchor="middle" font-size="11" fill="#64748b">merchant_id, customer_id</text>
+    <text x="95" y="214" text-anchor="middle" font-size="11" fill="#64748b">amount_usd, transaction_at</text>
+  </g>
+
+  <!-- Arrow 1 to 2 -->
+  <path d="M 230 220 L 270 220" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Stage 2: Parquet Lake -->
+  <g transform="translate(280, 90)">
+    <rect width="180" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="180" height="36" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" />
+    <text x="90" y="23" text-anchor="middle" font-size="13" font-weight="700" fill="#15803d">2. Raw Storage</text>
+    
+    <rect x="15" y="80" width="150" height="120" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="90" y="115" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a">data/raw_lake/</text>
+    <text x="90" y="140" text-anchor="middle" font-size="12" font-weight="600" fill="#16a34a">transactions.parquet</text>
+    <text x="90" y="165" text-anchor="middle" font-size="11" fill="#64748b">Columnar Format</text>
+  </g>
+
+  <!-- Arrow 2 to 3 -->
+  <path d="M 460 220 L 500 220" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Stage 3: DuckDB + dbt -->
+  <g transform="translate(510, 90)">
+    <rect width="220" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="220" height="36" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" />
+    <text x="110" y="23" text-anchor="middle" font-size="13" font-weight="700" fill="#b45309">3. dbt + DuckDB Transformations</text>
+
+    <rect x="15" y="55" width="190" height="50" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="105" y="75" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">stg_transactions (View)</text>
+    <text x="105" y="92" text-anchor="middle" font-size="10" fill="#64748b">Clean types &amp; amount &gt; 0 filter</text>
+
+    <rect x="15" y="115" width="190" height="50" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="105" y="135" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">int_merchant_fraud_spikes (Table)</text>
+    <text x="105" y="152" text-anchor="middle" font-size="10" fill="#64748b">7-day rolling avg chargebacks</text>
+
+    <rect x="15" y="175" width="190" height="50" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="105" y="195" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">fct_daily_merchant_settlement (Table)</text>
+    <text x="105" y="212" text-anchor="middle" font-size="10" fill="#64748b">Net payout after 1.5% fee</text>
+  </g>
+
+  <!-- Arrow 3 to 4 -->
+  <path d="M 730 220 L 770 220" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Stage 4: Monitoring & Output -->
+  <g transform="translate(780, 90)">
+    <rect width="180" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="180" height="36" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="1.5" />
+    <text x="90" y="23" text-anchor="middle" font-size="13" font-weight="700" fill="#7e22ce">4. Monitoring &amp; AI</text>
+
+    <rect x="15" y="60" width="150" height="70" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="90" y="85" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">15 dbt Data Tests</text>
+    <text x="90" y="105" text-anchor="middle" font-size="10" fill="#64748b">unique, not_null, accepted_values</text>
+
+    <rect x="15" y="145" width="150" height="85" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="90" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#1e293b">monitor_and_ai.py</text>
+    <text x="90" y="190" text-anchor="middle" font-size="10" fill="#64748b">Logs JSON payload &amp;</text>
+    <text x="90" y="208" text-anchor="middle" font-size="10" fill="#64748b">Slack incident summary</text>
+  </g>
+
+  <!-- Bottom Container Outline -->
+  <rect x="30" y="365" width="940" height="40" rx="6" fill="none" stroke="#94a3b8" stroke-dasharray="4 4" stroke-width="1.5" />
+  <text x="500" y="390" text-anchor="middle" font-size="12" font-weight="600" fill="#475569">🐳 Docker Compose Container Stack (python:3.12-slim) + Makefile Automation</text>
+</svg>
