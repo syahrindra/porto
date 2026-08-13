@@ -7,7 +7,7 @@ tag:  ["Python","Streamlit","LangFlow","Large Language Model","Retrieval-Augment
 github: ""
 featured: true
 year: "2025"
-coverImage: "/img/project-rag-chatbot-img/cover.png"
+coverImage: "/img/project_rag_chatbot_img/cover.png"
 ---
 
 ## Why I Built This Chatbot
@@ -18,7 +18,7 @@ At Universitas Widyatama, many students struggle to get basic academic informati
 In a survey of 24 students, around 79% said they had difficulty obtaining academic information rapidly, which can directly impact their academic process and development.
 
 <div class="media">
-    <img src="/img/project-rag-chatbot-img/rag illustration.png" alt="RAG Illustration">
+    <img src="/img/project_rag_chatbot_img/rag_illustration.png" alt="RAG Illustration">
 </div>   
 
 I wanted to see whether a modern Large Langauge Model (LLM) combined with Retrieval-Augmented Generation (RAG) could act as a 24/7 "virtual helpdesk" that answers these questions in Indonesia, grounded on official university documents instead of hallucinating answers.
@@ -28,7 +28,7 @@ I wanted to see whether a modern Large Langauge Model (LLM) combined with Retrie
 To keep this project rigorous (and not just “build something cool”), I used the Design Science Research (DSR) methodology from Hevner et al. and Peffers et al.  
 
 <div class="media">
-    <img src="/img/project-rag-chatbot-img/research process.png" alt="DSR Methodology">
+    <img src="/img/project_rag_chatbot_img/research_process.png" alt="DSR Methodology">
 </div>
 
 I followed six main phases:
@@ -60,7 +60,7 @@ The core system is a Retrieval-Augmented Generation pipeline orchestrated with *
 Here’s the high-level flow when a student asks a question:
 
 <div class="media">
-    <img src="/img/project-rag-chatbot-img/chatbot system arch and workflow.png" alt="chatbot system arch and workflow">
+    <img src="/img/project_rag_chatbot_img/chatbot_system_arch_and_workflow.png" alt="chatbot system arch and workflow">
 </div>
 
 1. **Query optimizer**  
