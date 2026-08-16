@@ -7,7 +7,7 @@ tag: ["Power BI","EDA","Survey Analytics","Dashboard","Data Visualization"]
 github: "https://github.com/syahrindra/data_professional_survey_dashboard"
 featured: true
 year: "2024"
-coverImage: "/img/project-survey-dashboard-img/cover image.png"
+coverImage: "/img/project_survey_dashboard_img/cover_image.png"
 ---
 
 ## Project Context
@@ -45,7 +45,7 @@ The dashboard is structured to tell the story of the survey at a glance:
 
 
 <div class="media">
-    <img src="/img/project-survey-dashboard-img/dashboard.png" alt="Survey Dashboard">
+    <img src="/img/project_survey_dashboard_img/dashboard.png" alt="Survey Dashboard">
 </div>
 
 ### 1. High-Level KPIs

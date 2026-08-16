@@ -7,7 +7,7 @@ tag:  ["Power BI","DAX","Data Modeling","HR Analytics","Dashboard", "Data Visual
 github: ""
 featured: true
 year: "2025"
-coverImage: "/img/project-hr-analytics-img/cover.png"
+coverImage: "/img/project_hr_analytics_img/cover.png"
 ---
 
 [🔗 View the Power BI report (.pbix)](https://drive.google.com/file/d/1qIFA5g6Yoaur5voo0uOkk1FgJY7mmPrz/view?usp=sharing)
@@ -37,7 +37,7 @@ These questions guided how I modeled the data, defined DAX measures, and designe
 The data model follows a simple star‑schema pattern centered on the `Employee` table.
 
 <div class="media">
-    <img src="/img/project-hr-analytics-img/star-schema pattern.png" alt="a simple star-schema pattern">
+    <img src="/img/project_hr_analytics_img/star_schema_pattern.png" alt="a simple star-schema pattern">
 </div>
 
 ### Core tables
@@ -99,7 +99,7 @@ I also created additional calculated columns and measures as needed to support b
 The **Overview** page focuses on the big picture:
 
 <div class="media">
-    <img src="/img/project-hr-analytics-img/overview-page.png" alt="Overview Page">
+    <img src="/img/project_hr_analytics_img/overview_page.png" alt="Overview Page">
 </div>
 
 - **KPI cards** showing:
@@ -118,7 +118,7 @@ This page gives HR and leadership an at-a-glance view of workforce size, diversi
 The **Attrition** page dives deeper into why people leave:
 
 <div class="media">
-    <img src="/img/project-hr-analytics-img/attrition-page.png" alt="Attrition Page">
+    <img src="/img/project_hr_analytics_img/attrition_page.png" alt="Attrition Page">
 </div>
 
 - **Bar chart** of `% Attrition Rate by JobRole` to pinpoint roles at highest risk—such as sales or highly specialized technical positions.

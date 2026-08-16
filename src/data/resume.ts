@@ -46,7 +46,7 @@ export const education: Education[] = [
     details: [
       "Relevant coursework: Programming and Algorithm, Object-Oriented Programming, Data Structure and Algorithm",
     ],
-    logoUrl: "/img/resume/Universitas-Widyatama.png"
+    logoUrl: "/img/resume/universitas_widyatama.png"
   },
   {
     degree: "Beswan Djarum 2023/2024",
@@ -69,7 +69,7 @@ export const professionalExperience: Experience[] = [
       "Collaborate with more than 10 partners",
       "Recognized as the 2nd most active and 3rd most impactful GDSC chapter among 86 nationwide",
     ],
-    logoUrl: "/img/resume/gdgoc-widyatama university.png"
+    logoUrl: "/img/resume/gdgoc_widyatama_university.png"
   },
   {
     role: "Region Business Performance",
@@ -77,7 +77,7 @@ export const professionalExperience: Experience[] = [
     location: "Bandung, Indonesia",
     period: "Feb 2025 — Apr 2025",
     bullets: [],
-    logoUrl: "/img/resume/pt-muamalat.png"
+    logoUrl: "/img/resume/pt_muamalat.png"
   },
   {
     role: "Assistant Lecturer",
@@ -88,7 +88,7 @@ export const professionalExperience: Experience[] = [
       "Supported academic development by facilitating learning in Programming and Algorithm I, Object-Oriented Programming I, and Data Structure and Algorithm",
       "Assisted students in learning Object Oriented Programming Courses using Java programming language (Oct 2023 - Jan 2024)",
     ],
-    logoUrl: "/img/resume/Universitas-Widyatama.png"
+    logoUrl: "/img/resume/universitas_widyatama.png"
   },
   {
     role: "Machine Learning Cohort",
@@ -184,12 +184,12 @@ export const certification: Certification[] = [
   {
     name: "AI-900: Microsoft Azure AI Fundamentals",
     url: "https://learn.microsoft.com/api/credentials/share/en-us/MSyahrindra-6092/C7C5792D96D8134A?sharingId=EF00FED9943A07E0",
-    logoUrl: "/img/resume/certification_ai-900.png"
+    logoUrl: "/img/resume/certification_ai_900.png"
   },
   {
     name: "Data Analyst Associate",
     url: "https://www.datacamp.com/certificate/DAA0015321624436",
-    logoUrl: "/img/resume/certification_DAA.png"
+    logoUrl: "/img/resume/certification_daa.png"
   },
   {
     name: "BNSP (Badan Nasional Sertifikasi Profesi) Certified: Database Administrator",

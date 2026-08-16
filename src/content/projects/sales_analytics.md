@@ -7,7 +7,7 @@ tag:  ["Tableau","Sales Analytics","Dashboard", "Data Visualization","Business I
 github: ""
 featured: true
 year: "2025"
-coverImage: "/img/project-sales-analytics-img/cover image.png"
+coverImage: "/img/project_sales_analytics_img/cover_image.png"
 ---
 [🔗 View the Tableau dashboard](https://public.tableau.com/app/profile/mochammad.syahrindra.akbar.suharno/viz/TableauDashboard_17360172811950/SalesDashboard-Final)
 
@@ -37,7 +37,7 @@ These questions quided the structure of the visuals, the choise of KPIs, and the
 ## Dashboard Design
 
 <div class="media">
-    <img src="/img/project-sales-analytics-img/Sales Dashboard-Final.png" alt="Sales Analytics Dashboard">
+    <img src="/img/project_sales_analytics_img/sales_dashboard_final.png" alt="Sales Analytics Dashboard">
 </div>
 
 

@@ -6,7 +6,7 @@ tag: ["DuckDB", "dbt", "Docker", "Python", "Parquet", "Data Quality", "SQL", "Da
 github: ""
 featured: true
 year: "2026"
-coverImage: "../img/fintech_lakehouse/cover.jpg"
+coverImage: "/img/fintech_lakehouse_project/cover.jpg"
 ---
 
 ## Project Overview
@@ -23,7 +23,7 @@ The objective was simple: simulate a realistic fintech payment pipeline that ing
 The project follows a simple 4-stage pipeline structure:
 
 <div class="media">
-    <img src="../img/fintech_lakehouse/data_architecture.svg" alt="Fintech Pipeline Architecture Diagram">
+    <img src="/img/fintech_lakehouse_project/data_architecture.svg" alt="Fintech Pipeline Architecture Diagram">
 </div>
 
 ### Stage Breakdown
