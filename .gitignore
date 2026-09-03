@@ -24,3 +24,6 @@ pnpm-debug.log*
 # editor settings
 .idea/
 .vscode/
+
+# swap files
+*.swp
